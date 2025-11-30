@@ -1,0 +1,223 @@
+
+        :root {
+            --primary-color: #005594; /* Azul SESI */
+            --secondary-color: #00a4e4; /* Azul Claro */
+            --success-color: #28a745;
+            --gray-light: #e0e0e0;
+            --gray-dark: #666;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .tracker-container {
+            background-color: var(--white);
+            width: 90%;
+            max-width: 900px;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .header p {
+            color: var(--gray-dark);
+            margin-top: 10px;
+        }
+
+        /* Barra de Progresso */
+        .progress-track {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+        }
+
+        /* Linha de fundo cinza */
+        .progress-track::before {
+            content: '';
+            position: absolute;
+            top: 25px; /* Metade da altura do ícone */
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--gray-light);
+            z-index: 0;
+        }
+
+        /* Linha de progresso colorida (dinâmica) */
+        .progress-fill {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 4px;
+            background-color: var(--success-color);
+            width: 0%; /* Será alterado pelo JS */
+            z-index: 0;
+            transition: width 0.5s ease;
+        }
+
+        .step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            width: 120px; /* Largura fixa para alinhar texto */
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--white);
+            border: 4px solid var(--gray-light);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px auto;
+            color: var(--gray-light);
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .step-label {
+            font-weight: 600;
+            color: var(--gray-dark);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .step-date {
+            font-size: 12px;
+            color: #999;
+            display: block;
+        }
+
+        /* Estados dos Passos */
+        .step.active .step-icon {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(0, 164, 228, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .step.completed .step-icon {
+            border-color: var(--success-color);
+            background-color: var(--success-color);
+            color: var(--white);
+        }
+
+        .step.active .step-label { color: var(--primary-color); }
+        .step.completed .step-label { color: var(--success-color); }
+
+        /* Botões de Simulação (Apenas para demo) */
+        .controls {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-next { background-color: var(--primary-color); color: white; }
+        .btn-prev { background-color: var(--gray-light); color: var(--gray-dark); }
+        
+        .btn-next:hover { background-color: #003d6b; }
+
+        /* Animação de pulso para o passo atual */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 164, 228, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 164, 228, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 164, 228, 0); }
+        }
+        
+        /* Responsividade para celular */
+        @media (max-width: 768px) {
+            .progress-track {
+                flex-direction: column;
+                padding-left: 30px;
+                gap: 20px;
+            }
+            .progress-track::before {
+                width: 4px;
+                height: 100%;
+                left: 53px; /* Ajustar posição da linha vertical */
+                top: 0;
+            }
+            .progress-fill {
+                width: 4px;
+                height: 0%; /* JS deve ajustar height em vez de width no mobile */
+                left: 53px;
+                top: 0;
+            }
+            .step {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                text-align: left;
+                gap: 20px;
+            }
+            .step-icon { margin: 0; }
+        }
+    
+        /* Adicione no final do set_progress_bar.css */
+.step-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80px; /* Garante espaço para os botões */
+}
+
+.actions-group {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+.btn-download, .btn-validate, .btn-action {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-download { background: #dc3545; color: white; }
+.btn-validate { background: #28a745; color: white; }
+.btn-action { background: #005594; color: white; margin-top: 5px; }
+
+.btn-download:hover { background: #a71d2a; }
+.btn-validate:hover { background: #1e7e34; }
